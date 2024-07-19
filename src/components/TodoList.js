@@ -6,25 +6,26 @@ import "../App.css";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL + "/todos/";
 
   useEffect(() => {
     // Fetch todos from the API
     axios
-      .get("http://127.0.0.1:8000/api/todos/")
+      .get(apiUrl)
       .then((response) => {
         setTodos(response.data);
       })
       .catch((error) => {
         console.error("There was an error fetching the todos!", error);
       });
-  }, []);
+  }, [apiUrl]);
 
   const addTodo = (todo) => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
       return;
     }
     axios
-      .post("http://127.0.0.1:8000/api/todos/", todo)
+      .post(apiUrl, todo)
       .then((response) => {
         setTodos([response.data, ...todos]);
       })
@@ -38,7 +39,7 @@ const TodoList = () => {
       return;
     }
     axios
-      .put(`http://127.0.0.1:8000/api/todos/${todoId}/`, newValue)
+      .put(`${apiUrl}${todoId}/`, newValue)
       .then((response) => {
         setTodos((prev) =>
           prev.map((item) => (item.id === todoId ? response.data : item))
@@ -51,7 +52,7 @@ const TodoList = () => {
 
   const removeTodo = (id) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/todos/${id}/`)
+      .delete(`${apiUrl}${id}/`)
       .then(() => {
         setTodos([...todos].filter((todo) => todo.id !== id));
       })
@@ -65,7 +66,7 @@ const TodoList = () => {
       if (todo.id === id) {
         todo.isComplete = !todo.isComplete;
         axios
-          .put(`http://127.0.0.1:8000/api/todos/${id}/`, todo)
+          .put(`${apiUrl}${id}/`, todo)
           .then((response) => {
             setTodos((prev) =>
               prev.map((item) => (item.id === id ? response.data : item))
@@ -77,6 +78,7 @@ const TodoList = () => {
       }
       return todo;
     });
+    setTodos(updatedTodos);
   };
 
   return (

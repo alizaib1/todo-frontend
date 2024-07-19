@@ -7,11 +7,13 @@
 }
 
 body {
-  background: linear-gradient(
-    90deg,
-    rgba(48, 16, 255, 1) 0%,
-    rgba(100, 115, 255, 1) 100%
-  );
+  background-color: #1c1348;
+  /* background: linear-gradient(
+    90deg, */
+    /* rgba(#81A263), */
+    /* rgb(37, 27, 88) 0%,
+     rgb(67, 68, 128) 100% */
+  /* ); */
 }
 .todo-app {
   display: flex;
@@ -19,7 +21,7 @@ body {
   justify-content: start;
   width: 520px;
   min-height: 600px;
-  background: #161a2b;
+  background: rgb(9, 9, 9);
   text-align: center;
   margin: 128px auto;
   border-radius: 10px;
